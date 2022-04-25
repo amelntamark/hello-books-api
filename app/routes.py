@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-books_bp = ("books_bp", __name__, "/books")
+books_bp = Blueprint("books_bp", __name__, url_prefix="/books")
 
 class Book:
     def __init__(self, id, title, description):
@@ -15,7 +15,7 @@ books = [
     Book(4, "Manufacturing Consent", "Nonfiction")
 ]
 
-@books.route("", methods=["GET"])
+@books_bp.route("", methods=["GET"])
 def get_books():
     books_response = []
     for book in books:
@@ -24,4 +24,4 @@ def get_books():
             "title": book.title,
             "description": book.description
         })
-    return jsonify(books_response)
+    return jsonify(books_response), 200
